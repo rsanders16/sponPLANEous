@@ -1,7 +1,6 @@
 <?php
 
 require('mysql_connect.php');
-require('constants.php');
 
 $airport_id = $_REQUEST['departure_airport'];
 $departure_date = $_REQUEST['departure_date'];
