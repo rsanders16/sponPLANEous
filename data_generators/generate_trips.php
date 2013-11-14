@@ -1,7 +1,6 @@
 <?php
 
-require_once('mysql_connect.php');
-require_once('constants.php');
+require_once('../mysql_connect.php');
 
 for($i = 1 ; $i <= 100 ; $i++) 
 {
