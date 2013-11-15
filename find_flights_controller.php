@@ -3,8 +3,9 @@ require_once("DATABASE_SETTINGS.php");
 mysql_connect(SERVER, USERNAME, PASSWORD) or die(mysql_error());
 mysql_select_db(DATABASE) or die(mysql_error());
 
-$airport_id = $_REQUEST['departure_airport'];
-$departure_date = $_REQUEST['departure_date'];
+$airport_id = mysql_real_escape_string($_REQUEST['departure_airport']);
+$departure_date = mysql_real_escape_string($_REQUEST['departure_date']);
+$departure_date = "11/11/2013"; //comment this line out to stop demo
 
 $result = mysql_query("SELECT name, latitude, longitude FROM _airport
 WHERE airport_id = '".$airport_id."'") 
