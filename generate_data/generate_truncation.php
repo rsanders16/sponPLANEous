@@ -1,7 +1,5 @@
 <?php
 
-require_once('../mysql_connect.php');
-
 mysql_query("TRUNCATE TABLE  `_airplane`") 
 or die(mysql_error());  
 

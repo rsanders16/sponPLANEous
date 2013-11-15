@@ -1,7 +1,5 @@
 <?php
 
-require_once('../mysql_connect.php');
-
 $result = mysql_query("SELECT * FROM _airport ORDER BY airport_id ASC") 
 or die(mysql_error());  
 

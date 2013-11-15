@@ -1,7 +1,5 @@
 <?php
 
-require_once('../mysql_connect.php');
-
 mysql_query("INSERT INTO `_airport` (`airport_id`, `name`, `city`, `latitude`, `longitude`) VALUES
 ('OCH', 'A L Mangham Jr. Regional', 'Nacogdoches, TX', '31.600000', '-94.650000'),
 ('AYE', 'AAF Heliport', 'Fort Devens', '19.833333', '-72.500000'),
