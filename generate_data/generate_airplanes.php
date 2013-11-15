@@ -3,7 +3,7 @@
 $i = 0;
 mysql_query("INSERT INTO `coms461`.`_airplane` 
 (`airplane_id`, `make`, `model`, `capacity`, `image_url`) 
-VALUES ('".$i."', 'Boeing', '".(737)."', '215', 'http://en.wikipedia.org/wiki/File:Lufthansa-1.jpg');") 
+VALUES ('".$i."', 'Boeing', '".(737)."', '215', 'http://upload.wikimedia.org/wikipedia/commons/6/63/Lufthansa-1.jpg');") 
 or die(mysql_error());	$i++;
 
 mysql_query("INSERT INTO `coms461`.`_airplane` 
@@ -14,7 +14,7 @@ or die(mysql_error());	$i++;
 
 mysql_query("INSERT INTO `coms461`.`_airplane` 
 (`airplane_id`, `make`, `model`, `capacity`, `image_url`) 
-VALUES ('".$i."', 'Boeing', '".(767)."', '290', 'http://en.wikipedia.org/wiki/File:Delta_Air_Lines_B767-332_N130DL.jpg');") 
+VALUES ('".$i."', 'Boeing', '".(767)."', '290', 'http://upload.wikimedia.org/wikipedia/commons/6/63/Lufthansa-1.jpg');") 
 or die(mysql_error());	$i++;
 
 
@@ -26,7 +26,7 @@ or die(mysql_error());	$i++;
 
 mysql_query("INSERT INTO `coms461`.`_airplane` 
 (`airplane_id`, `make`, `model`, `capacity`, `image_url`) 
-VALUES ('".$i."', 'Boeing', '".(787)." Dreamliner', '381', 'http://en.wikipedia.org/wiki/File:All_Nippon_Airways_Boeing_787-8_Dreamliner_JA801A_OKJ_in_flight.jpg');") 
+VALUES ('".$i."', 'Boeing', '".(787)." Dreamliner', '381', 'http://upload.wikimedia.org/wikipedia/commons/thumb/1/15/All_Nippon_Airways_Boeing_787-8_Dreamliner_JA801A_OKJ_in_flight.jpg/800px-All_Nippon_Airways_Boeing_787-8_Dreamliner_JA801A_OKJ_in_flight.jpg');") 
 or die(mysql_error());	$i++;
 
 

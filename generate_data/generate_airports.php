@@ -1526,7 +1526,6 @@ mysql_query("INSERT INTO `_airport` (`airport_id`, `name`, `city`, `latitude`, `
 ('ZNC', 'Nyac', 'Nyac', '60.983333', '-159.983333'),
 ('ODW', 'Oak Harbor', 'Oak Harbor', '48.283333', '-122.616667'),
 ('OAK', 'Oakland International Airport', 'Oakland', '37.716667', '-122.216667'),
-('OBT', 'Oakland/Coliseum Stat', 'Oakland, MD', '17.916667', '-142.050000'),
 ('OCA', 'Ocean Reef', 'Ocean Reef', '25.366667', '-80.266667'),
 ('OCI', 'Oceanic', 'Oceanic', '60.100000', '-148.216667'),
 ('CEU', 'Oconee County', 'Clemson', '34.666667', '-82.883333'),
