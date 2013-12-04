@@ -29,19 +29,24 @@ while($row = mysql_fetch_array( $result )) {
 } 
 
 $count = 0;
-for($i = 1 ; $i <= 25 ; $i++) 
+set_time_limit(0);
+for($i = 0 ; $i <= count($AIRPORT_LIST) - 1 ; $i++) 
 {
-		$random_index = rand(0, count($AIRPLANE_LIST) - 1);
-		mysql_query("INSERT INTO `coms461`.`_flight` 
-		(`flight_id`, `airplane_id`, `departure_date`, `arrival_date`, `seats_available`, `departure_airport`, `arrival_airport`) 
-		VALUES ('".($count++)."', '".$AIRPLANE_LIST[$random_index]['airplane_id']."', '11/11/2013', '11/11/2013', '".rand(1, $AIRPLANE_LIST[$random_index]['capacity'])."', 'DSM', '".$AIRPORT_LIST[rand(0,count($AIRPORT_LIST) - 1)]['airport_id']."');") 
-		or die(mysql_error());
-		
-		$random_index = rand(0, count($AIRPLANE_LIST) - 1);
-		mysql_query("INSERT INTO `coms461`.`_flight` 
-		(`flight_id`, `airplane_id`, `departure_date`, `arrival_date`, `seats_available`, `departure_airport`, `arrival_airport`) 
-		VALUES ('".($count++)."', '".$AIRPLANE_LIST[$random_index]['airplane_id']."', '11/11/2013', '11/11/2013', '".rand(1, $AIRPLANE_LIST[$random_index]['capacity'])."', 'ORD', '".$AIRPORT_LIST[rand(0,count($AIRPORT_LIST) - 1)]['airport_id']."');") 
-		or die(mysql_error());
+		$max = rand(15, 20);
+		for($j = 0; $j < $max ; $j++)
+		{
+			$random_index = rand(0, count($AIRPLANE_LIST) - 1);
+			$random_index_to = rand(0, count($AIRPORT_LIST) - 1);
+			
+			if ($i == $random_index_to)
+				continue;
+			
+			mysql_query("INSERT INTO `coms461`.`_flight` 
+			(`flight_id`, `airplane_id`, `departure_date`, `arrival_date`, `seats_available`, `departure_airport`, `arrival_airport`) 
+			VALUES ('".($count++)."', '".$AIRPLANE_LIST[$random_index]['airplane_id']."', '11/11/2013', '11/11/2013', '".rand(1, $AIRPLANE_LIST[$random_index]['capacity'])."', '".$AIRPORT_LIST[$i]['airport_id']."', '".$AIRPORT_LIST[$random_index_to]['airport_id']."');") 
+			or die(mysql_error());
+		}
 }
+set_time_limit(30);
 
 echo "Flight Data Inserted<br/>";

@@ -19,30 +19,36 @@
 				  var map = new google.maps.Map(document.getElementById("map-canvas"),
 					  mapOptions);
 				
-				
+				<?php $count = 1; ?>
 				<?php foreach ($flights as $flight): ?>
 				
-					var flightPlanCoordinates = [
+				setTimeout(function() {
 					
-					new google.maps.LatLng(<?php echo $departure_airport['latitude'] ?>, <?php echo $departure_airport['longitude'] ?>),
-					new google.maps.LatLng(<?php echo $flight['latitude'] ?>, <?php echo $flight['longitude'] ?>),
-					];
-					var flightPath = new google.maps.Polyline({
-					path: flightPlanCoordinates,
-					geodesic: true,
-					strokeColor: '#FF0000',
-					strokeOpacity: 0.5,
-					strokeWeight: 5
-					});
+						var flightPlanCoordinates = [
 					
-					flightPath.setMap(map);
+						new google.maps.LatLng(<?php echo $departure_airport['latitude'] ?>, <?php echo $departure_airport['longitude'] ?>),
+						new google.maps.LatLng(<?php echo $flight['latitude'] ?>, <?php echo $flight['longitude'] ?>),
+						];
+						var flightPath = new google.maps.Polyline({
+						path: flightPlanCoordinates,
+						geodesic: true,
+						strokeColor: 'orange',
+						strokeOpacity: 0.75,
+						strokeWeight: 6,
+						});
+						
+						flightPath.setMap(map);
+					
+					}, <?php echo $count++; ?> * 70);
+					
 				<?php endforeach ?>
 				
 				var marker = new google.maps.Marker({
 				position: new google.maps.LatLng(<?php echo $departure_airport['latitude'] ?>, <?php echo $departure_airport['longitude'] ?>),
 				map: map,
 				strokeColor: '#FF00FF',
-				title: '<?php echo mysql_real_escape_string($departure_airport['name']) ?>'
+				title: '<?php echo mysql_real_escape_string($departure_airport['name']) ?>',
+				animation: google.maps.Animation.DROP
 				});
 				
 				<?php $count = 0; ?>
@@ -62,22 +68,27 @@
 					content: contentString<?php echo $count; ?>,
 					});
 					
+					setTimeout(function() {
 					
-					var marker<?php echo $count; ?> = new google.maps.Marker({
-					position: new google.maps.LatLng(<?php echo $flight['latitude'] ?>, <?php echo $flight['longitude'] ?>),
-					map: map,
-					title: '<?php echo mysql_real_escape_string($flight['name']) ?>'
-					});
+						var marker<?php echo $count; ?> = new google.maps.Marker({
+						position: new google.maps.LatLng(<?php echo $flight['latitude'] ?>, <?php echo $flight['longitude'] ?>),
+						map: map,
+						title: '<?php echo mysql_real_escape_string($flight['name']) ?>',
+						animation: google.maps.Animation.DROP
+						});
+						
+						google.maps.event.addListener(marker<?php echo $count; ?>, 'mouseover', function() {
+						infowindow<?php echo $count; ?>.open(map,marker<?php echo $count; ?>);
+						});
+						
+						google.maps.event.addListener(marker<?php echo $count; ?>, 'mouseout', function() {
+						infowindow<?php echo $count; ?>.close();
+						});
 					
-					google.maps.event.addListener(marker<?php echo $count; ?>, 'mouseover', function() {
-					infowindow<?php echo $count; ?>.open(map,marker<?php echo $count; ?>);
-					});
+						marker<?php echo $count++; ?>.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
 					
-					google.maps.event.addListener(marker<?php echo $count; ?>, 'mouseout', function() {
-					infowindow<?php echo $count; ?>.close();
-					});
-				
-				marker<?php echo $count++; ?>.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
+					}, <?php echo $count; ?> * 50);	
+
 				<?php endforeach ?>
 				
 			}
