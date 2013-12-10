@@ -13,7 +13,8 @@
 		</script>
 		<style type="text/css">
 			html { height: 100% }
-			body { height: 100%; margin: 0; padding: 0;  }
+			body { height: 100%; margin: 0; padding: 0; font-family: arial }
+			#map-canvas { height: 100% }
 		</style>
 	</head>
 	<body>
@@ -28,6 +29,7 @@
 				on
 				<input name="departure_date" type="text" id="datepicker" />
 				<input type="submit" value="Find Flights" />
+				<input type="hidden" name="radius" value="1000" />
 			</form>
 		</div>
 	</body>
