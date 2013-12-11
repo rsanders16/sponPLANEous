@@ -42,8 +42,8 @@ for($i = 0 ; $i <= count($AIRPORT_LIST) - 1 ; $i++)
 				continue;
 			
 			mysql_query("INSERT INTO `coms461`.`_flight` 
-			(`flight_id`, `airplane_id`, `departure_date`, `arrival_date`, `seats_available`, `departure_airport`, `arrival_airport`) 
-			VALUES ('".($count++)."', '".$AIRPLANE_LIST[$random_index]['airplane_id']."', '11/11/2013', '11/11/2013', '".rand(1, $AIRPLANE_LIST[$random_index]['capacity'])."', '".$AIRPORT_LIST[$i]['airport_id']."', '".$AIRPORT_LIST[$random_index_to]['airport_id']."');") 
+			(`flight_id`, `airplane_id`, `departure_date`, `arrival_date`, `seats_available`, `departure_airport`, `arrival_airport`, `cost`) 
+			VALUES ('".($count++)."', '".$AIRPLANE_LIST[$random_index]['airplane_id']."', '11/11/2013', '11/11/2013', '".rand(1, $AIRPLANE_LIST[$random_index]['capacity'])."', '".$AIRPORT_LIST[$i]['airport_id']."', '".$AIRPORT_LIST[$random_index_to]['airport_id']."', '".rand(200, 1000)."');") 
 			or die(mysql_error());
 		}
 }

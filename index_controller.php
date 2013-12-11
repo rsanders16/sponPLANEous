@@ -3,8 +3,11 @@ require_once("DATABASE_SETTINGS.php");
 mysql_connect(SERVER, USERNAME, PASSWORD) or die(mysql_error());
 mysql_select_db(DATABASE) or die(mysql_error());
 
-$result = mysql_query("SELECT * FROM _airport ORDER BY airport_id ASC") 
+$query = "SELECT * FROM _airport ORDER BY airport_id ASC";
+$result = mysql_query($query) 
 or die(mysql_error());  
+
+mysql_query("INSERT INTO _log (statement) VALUES('".mysql_real_escape_string($query)."')");
 
 global $AIRPORT_LIST;
 

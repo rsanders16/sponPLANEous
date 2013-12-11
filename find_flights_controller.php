@@ -12,7 +12,6 @@ $airport_id = mysql_real_escape_string($_REQUEST['departure_airport']);
 $departure_date = mysql_real_escape_string($_REQUEST['departure_date']);
 $departure_date = "11/11/2013"; //comment this line out to stop demo
 
-
 $query = "SELECT name, latitude, longitude FROM _airport WHERE airport_id = '".$airport_id."'";
 $result = mysql_query($query) 
 or die(mysql_error());
@@ -26,7 +25,7 @@ $departure_airport['longitude'] = $row['longitude'];
 
 $flights = array();
 
-$query = "SELECT arrival_airport, airplane_id FROM _flight WHERE departure_date = '$departure_date' AND departure_airport = '$airport_id'";
+$query = "SELECT arrival_airport, airplane_id, cost, seats_available FROM _flight WHERE departure_date = '$departure_date' AND departure_airport = '$airport_id'";
 $result = mysql_query($query) 
 or die(mysql_error());
 log_query($query);  
@@ -34,6 +33,8 @@ log_query($query);
 while($row = mysql_fetch_array( $result )) {
 
 	$flight['airport_id'] = $row['arrival_airport'];
+	$flight['cost'] = $row['cost'];
+	$flight['seats_available'] = $row['seats_available'];
 	
 	$radius = $_REQUEST['radius'];
 	

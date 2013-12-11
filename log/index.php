@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>SqlFormatter Examples</title>
+    <title>Log</title>
     <style>
         body {
             font-family: arial; font-size: 15px;
@@ -39,8 +39,8 @@
 	$('div').load('log_controller.php');
 	setTimeout(function doSomething() {
 		$('div').load('log_controller.php');
-		setTimeout(doSomething, 500);
-	}, 500);
+		setTimeout(doSomething, 2000);
+	}, 2000);
 	</script>
 </html>
 	

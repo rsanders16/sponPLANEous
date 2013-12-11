@@ -4,9 +4,9 @@
 	<head>
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 		<style type="text/css">
-			html { height: 100% }
-			body { height: 100%; margin: 0; padding: 0; font-family: arial }
-			#map-canvas { height: 100% }
+			html { height: 100%; }
+			body { overflow: hidden; height: 100%; margin: 0; padding: 0; font-family: arial; font-size: 2em;  }
+			#map-canvas { height: 50% }
 		</style>
 		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
 		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
@@ -98,7 +98,6 @@
 						
 						
 						flightPath.setMap(map);
-						polylines.push(flightPath);
 					
 					}, <?php echo $count++; ?> * 60 + 550);
 					
@@ -112,7 +111,7 @@
 				animation: google.maps.Animation.DROP
 				});
 				
-				marker.setIcon('white.png');
+				marker.setIcon('images/white.png');
 				
 				var circleOptions = {
 				  strokeColor: '#cce5ff',
@@ -130,12 +129,12 @@
 				<?php $count = 0; ?>
 				<?php foreach ($flights as $flight): ?>
 				
-					var contentString<?php echo $count; ?> = '<div id="content">'+
+					var contentString<?php echo $count; ?> = '<div style="width: 300px" id="content">'+
 					'<div id="siteNotice">'+
 					'</div>'+
 					'<h3>Arrive at <?php echo mysql_real_escape_string($flight['name']) ?> Airport</h3>'+
 					'<div id="bodyContent">'+
-					'<p>You would fly on a <b><?php echo $flight['airplane']['make'] ?> <?php echo $flight['airplane']['model'] ?></b><br/>' +
+					'<p><b>$ <?php echo $flight['cost']; ?>.00</b></p><p>Hurry! There are only <?php echo $flight['seats_available']; ?> sets left!</p><p>You would fly on a <b><?php echo $flight['airplane']['make'] ?> <?php echo $flight['airplane']['model'] ?></b><br/>' +
 					'<img width=200px height=100px  src="<?php echo $flight['airplane']['image_url'] ?>" /></p>'+
 					'</div>'+
 					'</div>';
@@ -161,8 +160,7 @@
 						infowindow<?php echo $count; ?>.close();
 						});
 					
-						marker<?php echo $count; ?>.setIcon('black.png');
-						markers.push(marker<?php echo $count++; ?>);
+						marker<?php echo $count++; ?>.setIcon('images/black.png');
 					
 					}, <?php echo $count; ?> * 50 + 300);	
 			
@@ -184,7 +182,7 @@
 					stop: function(event, ui){
 						flightRadius.setRadius(ui.value * 1609.34);
 						$( "#amount" ).val( $( "#slider-vertical" ).slider( "value" ) + " miles" );
-						window.location = ('find_flights.php?departure_airport=DSM&departure_date=12%2F03%2F2013&radius=' + ui.value); 
+						window.location = ('find_flights.php?departure_airport=<?php echo $_REQUEST['departure_airport']; ?>&departure_date=<?php echo $_REQUEST['departure_date']; ?>&radius=' + ui.value); 
 					},
 					slide: function( event, ui ) {
 						flightRadius.setRadius(ui.value * 1609.34);
@@ -200,27 +198,29 @@
 		</script>
 	</head>
 	<body>
+		<div align="center" style="font-size:3em; color: #e67e22; text-shadow: 4px 2px #16828c">sponPLANEous</div><br/>
 		<div align="center">
 				<form action="find_flights.php" method="get">
 					I am departing from  
-					<select name="departure_airport">
+					<select name="departure_airport" style="font-size:1em;">
 						<?php foreach ($AIRPORT_LIST as $value): ?>
 							<option <?php if ($value['airport_id'] == $_REQUEST['departure_airport']) echo 'selected'; ?> value="<?php echo $value['airport_id'] ?>"><?php echo $value['airport_id'] ." - ". $value['name'] ?></option>
 						<?php endforeach ?>
 					</select>
 					on
-					<input name="departure_date" type="text" id="datepicker" />
-					<input type="submit" value="Find Flights" />
+					<input width="11" style="font-size:1em;" name="departure_date" type="text" id="datepicker" value="<?php echo $_REQUEST['departure_date']; ?>" />
+					<input type="submit" value="Find Flights" style="font-size:1em;" />
 					<input type="hidden" name="radius" value="1000" />
 				</form>
-		
-
-			Flight Radius Maximum:
-			<input type="text" id="amount" style="color:#e67e22">
-			<br />
+	
+		<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Flight Radius Maximum:
+			<input type="text" id="amount" style="color:#e67e22; border:0; font-weight:bold; font-size: 1em;"></input>
+		</div>
+		<br/>
 		<div id="slider-vertical" style="width:500px;"></div>
 		<br />
-		<div id="map-canvas"/>
+		<div style="border-style:solid;"id="map-canvas"/>
 		</div>
+		<div align="center">&copy 2013 sponPLANEous</div><br><br>
 	</body>
 </html>
