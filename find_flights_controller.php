@@ -25,20 +25,28 @@ $departure_airport['longitude'] = $row['longitude'];
 
 $flights = array();
 
-$query = "SELECT arrival_airport, airplane_id, cost, seats_available FROM _flight WHERE departure_date = '$departure_date' AND departure_airport = '$airport_id'";
+
+$price = ($_REQUEST['max_price'] > -1) ? $_REQUEST['max_price'] : 9000;
+$query = "SELECT flight_id, arrival_airport, airplane_id, seats_available FROM _flight WHERE departure_date =  '".$departure_date."' AND departure_airport =  '".$_REQUEST['departure_airport']."' AND flight_id = ANY(SELECT flight_id FROM _flights WHERE trip_id = ANY (SELECT trip_id FROM _trip WHERE price <= ".$price."))";
 $result = mysql_query($query) 
 or die(mysql_error());
-log_query($query);  
+log_query($query);
+//echo $query;
+//die;
 
+$count = 0;
 while($row = mysql_fetch_array( $result )) {
 
 	$flight['airport_id'] = $row['arrival_airport'];
-	$flight['cost'] = $row['cost'];
+	
+	$result2 = mysql_query("SELECT price FROM _trip WHERE trip_id = " . $row['flight_id']);
+	$row2 = mysql_fetch_array( $result2 );
+	$flight['price'] = $row2['price'];
 	$flight['seats_available'] = $row['seats_available'];
 	
 	$radius = $_REQUEST['radius'];
 	
-	if (!($radius > 100))
+	if (!($radius > -1))
 		$radius = 1000;
 	
 	$d = "((ACOS(SIN(RADIANS(".$departure_airport['latitude']."))*SIN(RADIANS(latitude)) + COS(RADIANS(".$departure_airport['latitude']."))*COS(RADIANS(latitude)) * COS(RADIANS(longitude)-RADIANS(".$departure_airport['longitude']."))) * 6371) < (".$radius." * 1.60934))";
@@ -47,7 +55,10 @@ while($row = mysql_fetch_array( $result )) {
 	$query = "SELECT name, latitude, longitude FROM _airport WHERE airport_id = '".$row['arrival_airport'] . "' AND " . $d;
 	$result2 = mysql_query($query) 
 	or die(mysql_error());
-	log_query($query); 
+	
+	if ($count == 0)
+		log_query($query);
+	$count++;
 
 	if (mysql_num_rows($result2) == 0)
 		continue;

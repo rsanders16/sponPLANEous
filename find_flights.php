@@ -6,7 +6,7 @@
 		<style type="text/css">
 			html { height: 100%; }
 			body { overflow: hidden; height: 100%; margin: 0; padding: 0; font-family: arial; font-size: 2em;  }
-			#map-canvas { height: 50% }
+			#map-canvas { height: 60% }
 		</style>
 		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
 		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
@@ -134,7 +134,7 @@
 					'</div>'+
 					'<h3>Arrive at <?php echo mysql_real_escape_string($flight['name']) ?> Airport</h3>'+
 					'<div id="bodyContent">'+
-					'<p><b>$ <?php echo $flight['cost']; ?>.00</b></p><p>Hurry! There are only <?php echo $flight['seats_available']; ?> sets left!</p><p>You would fly on a <b><?php echo $flight['airplane']['make'] ?> <?php echo $flight['airplane']['model'] ?></b><br/>' +
+					'<p><b>$ <?php echo $flight['price']; ?>.00</b></p><p>Hurry! There are only <?php echo $flight['seats_available']; ?> sets left!</p><p>You would fly on a <b><?php echo $flight['airplane']['make'] ?> <?php echo $flight['airplane']['model'] ?></b><br/>' +
 					'<img width=200px height=100px  src="<?php echo $flight['airplane']['image_url'] ?>" /></p>'+
 					'</div>'+
 					'</div>';
@@ -182,7 +182,7 @@
 					stop: function(event, ui){
 						flightRadius.setRadius(ui.value * 1609.34);
 						$( "#amount" ).val( $( "#slider-vertical" ).slider( "value" ) + " miles" );
-						window.location = ('find_flights.php?departure_airport=<?php echo $_REQUEST['departure_airport']; ?>&departure_date=<?php echo $_REQUEST['departure_date']; ?>&radius=' + ui.value); 
+						window.location = ('find_flights.php?departure_airport=<?php echo $_REQUEST['departure_airport']; ?>&departure_date=<?php echo $_REQUEST['departure_date']; ?>&radius=' + ui.value  + '&max_price=' + <?php echo $_REQUEST['max_price'] ?>); 
 					},
 					slide: function( event, ui ) {
 						flightRadius.setRadius(ui.value * 1609.34);
@@ -193,6 +193,28 @@
 				});
 				
 				$( "#amount" ).val( $( "#slider-vertical" ).slider( "value" ) + " miles" );
+			});	
+			
+			$(function() {
+				$( "#slider-vertical2" ).slider({
+					orientation: "horizontal",
+					range: "min",
+					min: 0,
+					max: 2000,
+					step: 10,
+					value: <?php echo $_REQUEST['max_price']; ?>,
+					stop: function(event, ui){
+						$( "#amount2" ).val( "$" + $( "#slider-vertical2" ).slider( "value" ) + ".00" );
+						window.location = ('find_flights.php?departure_airport=<?php echo $_REQUEST['departure_airport']; ?>&departure_date=<?php echo $_REQUEST['departure_date']; ?>&radius=<?php echo $_REQUEST['radius']; ?>&max_price=' + ui.value); 
+					},
+					slide: function( event, ui ) {
+						$( "#amount2" ).val( "$" + $( "#slider-vertical2" ).slider( "value" ) + ".00" );
+					}
+					
+					//
+				});
+				
+				$( "#amount2" ).val( "$" + $( "#slider-vertical2" ).slider( "value" ) + ".00" );
 			});	
 			
 		</script>
@@ -211,14 +233,27 @@
 					<input width="11" style="font-size:1em;" name="departure_date" type="text" id="datepicker" value="<?php echo $_REQUEST['departure_date']; ?>" />
 					<input type="submit" value="Find Flights" style="font-size:1em;" />
 					<input type="hidden" name="radius" value="1000" />
+					<input type="hidden" name="max_price" value="1000" />
 				</form>
-	
-		<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Flight Radius Maximum:
-			<input type="text" id="amount" style="color:#e67e22; border:0; font-weight:bold; font-size: 1em;"></input>
+	<div style="float:left; width = 200px; height: 100px; background-color:white; color:white">ddddddddddddddddddddd</div>
+	<div align="center">
+		<div align="center" style="float:left;">Maximum Distance:
+			<input type="text" id="amount" style="color:#e67e22; border:0; font-weight:bold; font-size: 1em;"></input><br>	
+			<div id="slider-vertical" style="width:500px;"></div>			
 		</div>
+		
+		<div align="center" style="float:left;">Maximum Price:
+			<input type="text" id="amount2" style="color:#e67e22; border:0; font-weight:bold; font-size: 1em;"></input><br>
+			<div id="slider-vertical2" style="width:500px;"></div>
+		</div>
+		</div>
+		
+		
 		<br/>
-		<div id="slider-vertical" style="width:500px;"></div>
-		<br />
+		<br/>
+		<br/>
+		
+
 		<div style="border-style:solid;"id="map-canvas"/>
 		</div>
 		<div align="center">&copy 2013 sponPLANEous</div><br><br>

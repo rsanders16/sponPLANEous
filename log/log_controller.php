@@ -5,7 +5,7 @@ require_once('sql_formatter.php');
 require_once("../DATABASE_SETTINGS.php");
 mysql_connect(SERVER, USERNAME, PASSWORD) or die(mysql_error());
 mysql_select_db(DATABASE) or die(mysql_error());
-$result = mysql_query("SELECT statement FROM _log ORDER BY timestamp DESC LIMIT 100");
+$result = mysql_query("SELECT statement FROM _log ORDER BY id DESC LIMIT 50");
 while($row = mysql_fetch_array( $result )) {
 	$statements[] = $row['statement'];
 }

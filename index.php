@@ -31,6 +31,7 @@
 					<input width="11" style="font-size:1em;" name="departure_date" type="text" id="datepicker" />
 					<input type="submit" value="Find Flights" style="font-size:1em;" />
 					<input type="hidden" name="radius" value="1000" />
+					<input type="hidden" name="max_price" value="1000" />
 				</form>
 	
 	
